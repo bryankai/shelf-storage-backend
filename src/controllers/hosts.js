@@ -116,15 +116,24 @@ function editSpace(req, res, next) {
   if(!req.body.name){
     return next({ status: 400, message: 'Please provide name'})
   }
-  if(!req.body.streak){
-    return next({ status: 400, message: 'Please provide streak'})
+  if(!req.body.description){
+    return next({ status: 400, message: 'Please provide description'})
   }
-  hostsModel.editSpace(
-    req.params.id,
-    req.params.spaceId,
-    req.body.name,
-    req.body.streak
-  )
+  if(!req.body.address){
+    return next({ status: 400, message: 'Please provide address'})
+  }
+  if(!req.body.city){
+    return next({ status: 400, message: 'Please provide city'})
+  }
+  if(!req.body.state){
+    return next({ status: 400, message: 'Please provide state'})
+  }
+  if(!req.body.zip){
+    return next({ status: 400, message: 'Please provide zip code'})
+  }
+  const {name, description, img_link, address, city, state, zip, temp_control, access, size, price} = req.body
+
+  hostsModel.editSpace(req.params.spaceId, name, description, img_link, address, city, state, zip, temp_control, access, size, price)
   .then(function(data){
     return res.status(200).send({ data })
   })
@@ -141,7 +150,6 @@ function activateSpace(req, res, next) {
   if(typeof req.body.active !== 'boolean') {
     return next({ status: 400, message: 'Please provide new active status'})
   }
-  console.log(req.body.active)
   hostsModel.activateSpace(req.params.id, req.params.spaceId, req.body.active)
   .then(function(data){
     return res.status(200).send({ data })
@@ -164,35 +172,41 @@ function removeSpace(req, res, next) {
 }
 
 ////////////////////////////////////////////////////////////////////
-// DAILY HISTORY
+// Hosts/Spaces/Orders
 ////////////////////////////////////////////////////////////////////
 
 function createOrder(req, res, next){
   if(!req.params.spaceId){
     return next({ status: 400, message: 'Please provide spaceId'})
   }
-  if(typeof req.body.completed === undefined){
-    return next({ status: 400, message: 'Please provide completed status'})
+  if(!req.params.guestId){
+    return next({ status: 400, message: 'Please provide guestId'})
   }
-  hostsModel.createOrder(req.params.spaceId, req.body.completed)
+  if(!req.body.startDate){
+    return next({ status: 400, message: 'Please provide startDate'})
+  }
+  if(!req.body.endDate){
+    return next({ status: 400, message: 'Please provide endDate'})
+  }
+  if(!req.body.totalCost){
+    return next({ status: 400, message: 'Please provide totalCost'})
+  }
+
+  hostsModel.createOrder(req.params.spaceId, req.params.spaceId, req.body.startDate, req.body.endDate, req.body.totalCost)
   .then(function(data){
     return res.status(201).send({ data })
   })
   .catch(next)
 }
 
-function getMostRecentOrderForToday(req, res, next) {
-  if(!req.params.id){
-    return next({ status: 400, message: 'Please provide hostId'})
-  }
+function getAllOrdersBySpaceId(req, res, next){
   if(!req.params.spaceId){
     return next({ status: 400, message: 'Please provide spaceId'})
   }
-  hostsModel.getMostRecentOrderForToday(
-    req.params.id,
-    req.params.spaceId)
+
+  hostsModel.getAllOrdersBySpaceId(req.params.spaceId)
   .then(function(data){
-    return res.status(200).send({ data })
+    return res.status(201).send({ data })
   })
   .catch(next)
 }
@@ -255,11 +269,11 @@ module.exports = {
   createSpace,
   getAllSpacesByHostId,
   getOneSpace,
-  // editSpace,
+  editSpace,
   activateSpace,
   // // Space History
-  // createOrder,
-  // getMostRecentOrderForToday,
+  createOrder,
+  getAllOrdersBySpaceId,
   // getOneOrder,
   // patchOrder,
 }

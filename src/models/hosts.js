@@ -95,11 +95,12 @@ function getOneSpace(hosts_id, id){
   )
 }
 
-function editSpace(hosts_id, id, name, streak){
+function editSpace(id, name, description, img_link, address, city, state, zip, temp_control, access, size, price){
+  console.log(id, img_link)
   return (
     knex('spaces')
     .where({ id })
-    .update({ name, streak })
+    .update({ name, description, img_link, address, city, state, zip, temp_control, access, size, price })
     .returning('*')
     .then(function([data]){
       return data
@@ -122,23 +123,33 @@ function activateSpace(hosts_id, id, active){
 // ////////////////////////////////////////////////////////////////////
 // // ORDERS
 // ////////////////////////////////////////////////////////////////////
-//
-// function createOrder(
-//   spaces_id,
-//   completed,
-// ) {
-//   return (
-//     knex('orders')
-//     .insert({ completed: completed, spaces_id})
-//     .returning('*')
-//     .then(function([data]){
-//       return data
-//     })
-//   )
-// }
-//
-// function getOneOrder(hosts_id, spaces_id, id){
-//   return (
+
+function createOrder(
+  guests_id,
+  spaces_id,
+  start_date,
+  end_date,
+  total_cost
+) {
+  return (
+    knex('orders')
+    .insert({  })
+    .returning('*')
+    .then(function([data]){
+      return data
+    })
+  )
+}
+
+function getAllOrdersBySpaceId(spaces_id){
+  return (
+    knex('orders')
+    .where({ spaces_id })
+    .join('spaces', 'spaces.id', 'orders.spaces_id')
+    .returning('*')
+  )
+}
+
 
 
 ////////////////////////////////////////////////////////////////////
@@ -155,10 +166,10 @@ module.exports = {
   createSpace,
   getAllSpacesByHostId,
   getOneSpace,
-  // editSpace,
+  editSpace,
   activateSpace,
   // // Orders
-  // createOrder,
+  getAllOrdersBySpaceId,
   // getOneOrder,
   // patchOrder,
 }

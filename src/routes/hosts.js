@@ -17,14 +17,23 @@ router.get('/:id', hostsController.getOneHost)
 // Hosts/Spaces
 ////////////////////////////////////////////////////////////////////
 
-// Need to test
+// All working
 
 router.post('/:id/spaces', hostsController.createSpace)
 router.get('/:id/spaces', hostsController.getAllSpacesByHostId)
 router.get('/:id/spaces/:spaceId', hostsController.getOneSpace)
-// router.put('/:id/spaces/:spaceId', hostsController.editSpace)
+router.put('/:id/spaces/:spaceId', hostsController.editSpace)
 router.patch('/:id/spaces/:spaceId', hostsController.activateSpace)
 
+////////////////////////////////////////////////////////////////////
+// Hosts/Spaces/Orders
+////////////////////////////////////////////////////////////////////
+
+// Need to test
+
+router.get('/:id/spaces/:spaceId/orders', hostsController.getAllOrdersBySpaceId)
+// router.get('/:id/spaces/:spaceId/orders/:orderId', hostsController.getOneOrder)
+// router.put('/:id/spaces/:spaceId/orders/:orderId', hostsController.editOrder)
 
 ////////////////////////////////////////////////////////////////////
 // Export
