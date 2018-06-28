@@ -45,7 +45,7 @@ function getOneGuest(req, res, next) {
 }
 
 ////////////////////////////////////////////////////////////////////
-// Guests/Spaces/Orders
+// Guests/Guests/Orders
 ////////////////////////////////////////////////////////////////////
 
 function createOrder(req, res, next){
@@ -72,12 +72,12 @@ function createOrder(req, res, next){
   .catch(next)
 }
 
-function getAllOrdersBySpaceId(req, res, next){
-  if(!req.params.spaceId){
-    return next({ status: 400, message: 'Please provide spaceId'})
+function getAllOrdersByGuestId(req, res, next){
+  if(!req.params.id){
+    return next({ status: 400, message: 'Please provide id'})
   }
 
-  guestsModel.getAllOrdersBySpaceId(req.params.spaceId)
+  guestsModel.getAllOrdersByGuestId(req.params.id)
   .then(function(data){
     return res.status(201).send({ data })
   })
@@ -126,9 +126,9 @@ module.exports = {
   createGuest,
   getAllGuests,
   getOneGuest,
-  // // Space History
+  // Orders
   // createOrder,
-  // getAllOrdersByGuestId,
+  getAllOrdersByGuestId,
   // getOneOrder,
   // cancelOrderByGuest
 }

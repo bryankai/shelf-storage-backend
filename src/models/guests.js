@@ -114,7 +114,7 @@ module.exports = {
   // getGuestByEmail,
   getOneGuest,
   // // Orders
-  // getAllOrdersByGuestId,
+  getAllOrdersByGuestId,
   // getOneOrder,
   // cancelOrderByGuest
 }
