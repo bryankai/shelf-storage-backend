@@ -49,11 +49,11 @@ function getOneGuest(req, res, next) {
 ////////////////////////////////////////////////////////////////////
 
 function createOrder(req, res, next){
-  if(!req.params.spaceId){
-    return next({ status: 400, message: 'Please provide spaceId'})
-  }
-  if(!req.params.guestId){
+  if(!req.params.id){
     return next({ status: 400, message: 'Please provide guestId'})
+  }
+  if(!req.body.spaceId){
+    return next({ status: 400, message: 'Please provide spaceId'})
   }
   if(!req.body.startDate){
     return next({ status: 400, message: 'Please provide startDate'})
@@ -65,7 +65,7 @@ function createOrder(req, res, next){
     return next({ status: 400, message: 'Please provide totalCost'})
   }
 
-  guestsModel.createOrder(req.params.spaceId, req.params.spaceId, req.body.startDate, req.body.endDate, req.body.totalCost)
+  guestsModel.createOrder(req.params.id, req.body.spaceId, req.body.startDate, req.body.endDate, req.body.totalCost)
   .then(function(data){
     return res.status(201).send({ data })
   })
@@ -101,13 +101,13 @@ function cancelOrderByGuest(req, res, next) {
   if(!req.params.orderId){
     return next({ status: 400, message: 'Please provide orderId'})
   }
-  if(!req.body.cancelled_at){
+  if(!req.body.cancelledAt){
     return next({ status: 400, message: 'Please provide cancelled_at'})
   }
 
   guestsModel.cancelOrderByGuest(
     req.params.orderId,
-    req.body.cancelled_at,
+    req.body.cancelledAt,
   )
   .then(function(data){
     return res.status(200).send({ data })
@@ -127,8 +127,8 @@ module.exports = {
   getAllGuests,
   getOneGuest,
   // Orders
-  // createOrder,
+  createOrder,
   getAllOrdersByGuestId,
-  // getOneOrder,
-  // cancelOrderByGuest
+  getOneOrder,
+  cancelOrderByGuest
 }
