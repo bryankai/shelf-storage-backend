@@ -159,7 +159,7 @@ function activateSpace(req, res, next) {
 
 function removeSpace(req, res, next) {
   if(!req.params.id){
-    return next({ status: 400, message: 'Please provide id'})
+    return next({ status: 400, message: 'Please provide hostId'})
   }
   if(!req.params.spaceId){
     return next({ status: 400, message: 'Please provide spaceId'})
@@ -212,17 +212,11 @@ function getAllOrdersBySpaceId(req, res, next){
 }
 
 function getOneOrder(req, res, next) {
-  if(!req.params.id){
-    return next({ status: 400, message: 'Please provide hostId'})
-  }
-  if(!req.params.spaceId){
-    return next({ status: 400, message: 'Please provide spaceId'})
-  }
   if(!req.params.orderId){
     return next({ status: 400, message: 'Please provide orderId'})
   }
 
-  hostsModel.getOneOrder(req.params.id, req.params.spaceId, req.params.orderId)
+  hostsModel.getOneOrder(req.params.orderId)
   .then(function(data){
     return res.status(200).send({ data })
   })
@@ -230,23 +224,17 @@ function getOneOrder(req, res, next) {
 }
 
 
-function patchOrder(req, res, next) {
-  if(!req.params.id){
-    return next({ status: 400, message: 'Please provide hostId'})
-  }
-  if(!req.params.spaceId){
-    return next({ status: 400, message: 'Please provide spaceId'})
-  }
+function cancelOrderByHost(req, res, next) {
   if(!req.params.orderId){
     return next({ status: 400, message: 'Please provide orderId'})
   }
-  if(!req.body.completed){
-    return next({ status: 400, message: 'Please provide completed'})
+  if(!req.body.cancelled_at){
+    return next({ status: 400, message: 'Please provide cancelled_at'})
   }
 
-  hostsModel.patchOrder(
+  hostsModel.cancelOrderByHost(
     req.params.orderId,
-    req.body.completed,
+    req.body.cancelled_at,
   )
   .then(function(data){
     return res.status(200).send({ data })
@@ -271,9 +259,9 @@ module.exports = {
   getOneSpace,
   editSpace,
   activateSpace,
-  // // Space History
+  // Space History
   createOrder,
   getAllOrdersBySpaceId,
-  // getOneOrder,
-  // patchOrder,
+  getOneOrder,
+  cancelOrderByHost
 }

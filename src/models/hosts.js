@@ -150,7 +150,25 @@ function getAllOrdersBySpaceId(spaces_id){
   )
 }
 
+function getOneOrder(id){
+  return (
+    knex('orders')
+    .where({ id })
+    .first()
+  )
+}
 
+function cancelOrderByHost(id, cancelled_at){
+  return (
+    knex('orders')
+    .where({ id })
+    .update({ cancelled_at })
+    .returning('*')
+    .then(function([data]){
+      return data
+    })
+  )
+}
 
 ////////////////////////////////////////////////////////////////////
 // Export
@@ -168,8 +186,8 @@ module.exports = {
   getOneSpace,
   editSpace,
   activateSpace,
-  // // Orders
+  // Orders
   getAllOrdersBySpaceId,
-  // getOneOrder,
-  // patchOrder,
+  getOneOrder,
+  cancelOrderByHost
 }
