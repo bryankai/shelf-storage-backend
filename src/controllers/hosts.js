@@ -253,13 +253,13 @@ module.exports = {
   createHost,
   getAllHosts,
   getOneHost,
-  // Spaces
+  // Hosts/Spaces
   createSpace,
   getAllSpacesByHostId,
   getOneSpace,
   editSpace,
   activateSpace,
-  // Space History
+  // Hosts/Spaces/Orders
   createOrder,
   getAllOrdersBySpaceId,
   getOneOrder,

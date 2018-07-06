@@ -5,6 +5,7 @@ exports.up = function (knex, Promise) {
         table.string('last_name').notNullable()
         table.string('email').notNullable()
         table.string('hashed_password').notNullable()
+        table.string('avatar').defaultTo('https://www.lagersmit.com/wp-content/uploads/2014/09/default_avatar-2.gif')
         table.timestamps(true, true)
     })
 };
