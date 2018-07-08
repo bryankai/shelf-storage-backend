@@ -9,6 +9,8 @@ exports.up = function(knex, Promise) {
     table.string('city').notNullable();
     table.string('state').notNullable();
     table.integer('zip').notNullable();
+    table.float('lat').notNullable();
+    table.float('lng').notNullable();
     table.boolean('temp_control').defaultTo(false);
     table.boolean('access').defaultTo(false);
     table.integer('size').defaultTo(null);
