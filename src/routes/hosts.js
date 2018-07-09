@@ -30,7 +30,7 @@ router.patch('/:id/spaces/:spaceId', hostsController.activateSpace)
 ////////////////////////////////////////////////////////////////////
 
 // Need to test
-
+// router.post('/:id/spaces/:spaceId/orders', hostsController.createOrder)
 router.get('/:id/spaces/:spaceId/orders', hostsController.getAllOrdersBySpaceId)
 router.get('/:id/spaces/:spaceId/orders/:orderId', hostsController.getOneOrder)
 router.patch('/:id/spaces/:spaceId/orders/:orderId', hostsController.cancelOrderByHost)
