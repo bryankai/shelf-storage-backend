@@ -79,7 +79,7 @@ function getAllOrdersByGuestId(req, res, next){
 
   guestsModel.getAllOrdersByGuestId(req.params.id)
   .then(function(data){
-    return res.status(201).send({ data })
+    return res.status(200).send({ data })
   })
   .catch(next)
 }

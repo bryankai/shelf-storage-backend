@@ -78,8 +78,23 @@ function getAllOrdersByGuestId(guests_id){
   return (
     knex('orders')
     .where({ guests_id })
-    .join('guests', 'guests.id', 'orders.guests_id')
-    .returning('*')
+    .join('spaces', 'spaces.id', 'orders.spaces_id')
+    .join('hosts', 'hosts.id', 'spaces.hosts_id')
+    .select(knex.raw('orders.*'))
+    .select(
+      'spaces.name as name',
+      'spaces.img_link as img_link',
+      'spaces.address as address',
+      'spaces.city as city',
+      'spaces.state as state',
+      'spaces.size as size',
+      'spaces.lat as lat',
+      'spaces.lng as lng',
+      'hosts.id as hosts_id',
+      'hosts.first_name as hostFirstName',
+      'hosts.last_name as hostLastName',
+      'hosts.avatar as hostAvatar',
+    )
   )
 }
 
