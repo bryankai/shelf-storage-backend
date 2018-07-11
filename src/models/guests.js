@@ -110,6 +110,7 @@ function cancelOrderByGuest(id, cancelled_at){
 module.exports = {
   // Guests
   createGuest,
+  getGuestByEmail,
   getAllGuests,
   getOneGuest,
   // // Orders

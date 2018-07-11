@@ -1,6 +1,6 @@
 // const db = require('../../db')
 const bcrypt = require('bcrypt-as-promised')
-const userModel = require('./users')
+const guestModel = require('./guests')
 
 //////////////////////////////////////////////////////////////////////////////
 // Basic CRUD Methods
@@ -18,14 +18,14 @@ const userModel = require('./users')
 //////////////////////////////////////////////////////////////////////////////
 
 function login(email, password){
-  let user
-  // 1. Check to see if user already exists
-  return userModel.getUserByEmail(email)
+  let guestUser
+  // 1. Check to see if guestUser already exists
+  return guestModel.getGuestByEmail(email)
   .then(function(data){
     // 1a. if not, return a 400 with appropriate error message
     if(!data) throw { status: 400, message: "Bad Request"}
-    // save user for later use
-    user = data
+    // save guestUser for later use
+    guestUser = data
     // 2. compare password in the database with the password provided by user
     return bcrypt.compare(password, data.hashed_password)
     // password is not hashed. bcrypt hashes it then compares it
@@ -37,9 +37,9 @@ function login(email, password){
   })
   .then(function(){
     // 4. strip hashed password away from object
-    delete user.hashed_password
+    delete guestUser.hashed_password
     // 5. "return/continue" promise
-    return user
+    return guestUser
   })
 }
 
