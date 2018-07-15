@@ -11,11 +11,11 @@ function createHost(req, res, next){
   if(!req.body.last_name){
     return next({ status: 400, message: 'Please provide last_name'})
   }
-  if(!req.body.password){
-    return next({ status: 400, message: 'Please provide password'})
-  }
   if(!req.body.email){
     return next({ status: 400, message: 'Please provide email'})
+  }
+  if(!req.body.password){
+    return next({ status: 400, message: 'Please provide password'})
   }
   hostsModel.createHost(req.body.first_name, req.body.last_name, req.body.email, req.body.password)
   .then(function(data){

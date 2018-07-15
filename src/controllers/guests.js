@@ -11,14 +11,15 @@ function createGuest(req, res, next){
   if(!req.body.last_name){
     return next({ status: 400, message: 'Please provide last_name'})
   }
-  if(!req.body.password){
-    return next({ status: 400, message: 'Please provide password'})
-  }
   if(!req.body.email){
     return next({ status: 400, message: 'Please provide email'})
   }
-  guestsModel.createGuest(req.body.first_name, req.body.last_name, req.body.email, req.body.password)
+  if(!req.body.password){
+    return next({ status: 400, message: 'Please provide password'})
+  }
+  guestsModel.createGuest(req.body.first_name, req.body.last_name, req.body.email, req.body.password, req.body.avatar)
   .then(function(data){
+    console.log('controller data', data)
     return res.status(201).send({ data })
   })
   .catch(next)

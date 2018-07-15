@@ -28,7 +28,7 @@ function getOneGuest(id){
   )
 }
 
-function createGuest(first_name, last_name, email, password){
+function createGuest(first_name, last_name, email, password, avatar='https://www.lagersmit.com/wp-content/uploads/2014/09/default_avatar-2.gif'){
   return getGuestByEmail(email)
   .then(function(data){
     if(data) throw { status: 400, message:'Email already being used'}
@@ -38,9 +38,10 @@ function createGuest(first_name, last_name, email, password){
   .then(function(hashedPassword){
     return (
       knex('guests')
-      .insert({ first_name, last_name, email, hashed_password: hashedPassword })
+      .insert({ first_name, last_name, email, hashed_password: hashedPassword, avatar})
       .returning('*')
       .then(function([data]){
+        console.log('returned data', data)
         return data
       })
     )

@@ -146,6 +146,7 @@ function getAllOrdersBySpaceId(spaces_id){
     knex('orders')
     .where({ spaces_id })
     .join('spaces', 'spaces.id', 'orders.spaces_id')
+    .join('guests', 'guests.id', 'orders.guests_id')
     .returning('*')
   )
 }
