@@ -1,12 +1,13 @@
 const express = require('express')
 const router = express.Router()
-const authController = require('../controllers/auth')
+const hostAuthController = require('../controllers/hostAuth')
 
 //////////////////////////////////////////////////////////////////////////////
-// Guest auth CRUD Methods
+// Host Auth CRUD Methods
 //////////////////////////////////////////////////////////////////////////////
-router.get('/token', authController.isAuthenticated, authController.getAuthStatus)
-router.post('/token', authController.login)
+router.get('/token', hostAuthController.isAuthenticated, hostAuthController.getAuthStatus)
+router.post('/token', hostAuthController.hostLogin)
+
 
 ////////////////////////////////////////////////////////////////////
 // Export
