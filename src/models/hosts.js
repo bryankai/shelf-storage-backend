@@ -66,7 +66,7 @@ function getAllSpacesByHostId(hosts_id){
   return (
     knex('spaces')
     .where({ hosts_id })
-    .join('hosts', 'hosts.id', 'spaces.hosts_id')
+    // .join('hosts', 'hosts.id', 'spaces.hosts_id')
     .returning('*')
     // .select(
     //   'spaces.id as id',
