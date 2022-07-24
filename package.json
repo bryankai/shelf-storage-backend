@@ -27,8 +27,7 @@
     "start": "node server.js",
     "latest": "knex migrate:latest",
     "rollback": "knex migrate:rollback",
-    "seed": "knex seed:run",
-    "debug": "node --inspect server.js"
+    "seed": "knex seed:run"
   },
   "repository": {
     "type": "git",
