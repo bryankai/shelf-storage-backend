@@ -14,9 +14,10 @@ These instructions will get you a copy of the project up and running on your loc
 
 What things you need to install the software and how to install them
 
-```shell
 * fork and clone this repository
-* run npm install
+* run `npm install`
+```shell
+npm install
 ```
 
 
@@ -27,7 +28,7 @@ A step by step series of examples that tell you how to get a development env run
 Create the development database:
 
 ```shell
-* createdb storage_share_dev
+createdb storage_share_dev
 ```
 
 and run migrations and seeds:

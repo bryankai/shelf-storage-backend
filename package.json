@@ -4,18 +4,22 @@
   "description": "Storage sharing platform",
   "main": "knexfile.js",
   "dependencies": {
-    "bcrypt-as-promised": "^1.1.0",
-    "body-parser": "^1.18.3",
-    "cors": "^2.8.4",
-    "dotenv": "^6.0.0",
-    "express": "^4.16.3",
-    "jsonwebtoken": "^8.3.0",
-    "knex": "^0.14.6",
-    "morgan": "^1.9.1",
-    "pg": "^7.4.3"
+    "bcrypt": "^5.0.1",
+    "body-parser": "^1.19.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.0",
+    "express": "^4.17.3",
+    "jsonwebtoken": "^8.5.1",
+    "knex": "^1.0.4",
+    "morgan": "^1.10.0",
+    "pg": "^8.7.3",
+    "pgtools": "^0.1.1"
   },
   "devDependencies": {
-    "nodemon": "^1.17.5"
+    "nodemon": "^2.0.15"
+  },
+  "env": {
+    "PYTHON": "/opt/local/bin/python2.7"
   },
   "scripts": {
     "dev": "nodemon server.js",
@@ -23,7 +27,8 @@
     "start": "node server.js",
     "latest": "knex migrate:latest",
     "rollback": "knex migrate:rollback",
-    "seed": "knex seed:run"
+    "seed": "knex seed:run",
+    "debug": "node --inspect server.js"
   },
   "repository": {
     "type": "git",

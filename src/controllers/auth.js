@@ -1,10 +1,9 @@
-const authModel = require('../models/auth')
-const jwt = require('jsonwebtoken')
+const authModel = require("../models/auth");
+const jwt = require("jsonwebtoken");
 
 //////////////////////////////////////////////////////////////////////////////
 // Basic CRUD Methods
 //////////////////////////////////////////////////////////////////////////////
-
 
 //////////////////////////////////////////////////////////////////////////////
 // Login Controller
@@ -15,65 +14,64 @@ const jwt = require('jsonwebtoken')
 // 4. Send back token
 //////////////////////////////////////////////////////////////////////////////
 
-function login(req, res, next){
+function login(req, res, next) {
   // 1. Make sure that request is good
-  if(!req.body.email){
-    return next({ status: 400, message: 'Bad request'})
+  if (!req.body.email) {
+    return next({ status: 400, message: "Bad request" });
   }
 
-  if(!req.body.password){
-    return next({ status: 400, message: 'Bad request'})
+  if (!req.body.password) {
+    return next({ status: 400, message: "Bad request" });
   }
 
-  authModel.login(req.body.email, req.body.password)
-  .then(function(user){
+  authModel
+    .login(req.body.email, req.body.password)
+    .then(function (user) {
+      // 3. Create token
+      const token = jwt.sign(
+        { id: user.id, name: user.first_name },
+        process.env.SECRET
+      );
 
-    // 3. Create token
-    const token = jwt.sign({id: user.id, name: user.first_name}, process.env.SECRET)
-
-    // 4. Send back token
-    return res.status(200).send({ token })
-  })
-  .catch(next)
+      // 4. Send back token
+      return res.status(200).send({ token });
+    })
+    .catch(next);
 }
 
-
-function getAuthStatus(req, res, next){
-    res.status(200).send(req.claim)
+function getAuthStatus(req, res, next) {
+  res.status(200).send(req.claim);
 }
 
 //////////////////////////////////////////////////////////////////////////////
 // Quality of Life functions
 //////////////////////////////////////////////////////////////////////////////
 
-function isAuthenticated(req, res, next){
-  if(!req.headers.authorization){
-    return next({ status: 401, message: 'Unauthorized' })
+function isAuthenticated(req, res, next) {
+  if (!req.headers.authorization) {
+    return next({ status: 401, message: "Unauthorized" });
   }
-  const [scheme, credentials] = req.headers.authorization.split(' ')
+  const [scheme, credentials] = req.headers.authorization.split(" ");
 
-
-
-  jwt.verify(credentials, process.env.SECRET, (err, payload)=>{
-    if(err){
-      return next({ status: 401, message: 'Unauthorized' })
+  jwt.verify(credentials, process.env.SECRET, (err, payload) => {
+    if (err) {
+      return next({ status: 401, message: "Unauthorized" });
     }
-    req.claim = payload
-    next()
-  })
+    req.claim = payload;
+    next();
+  });
 }
 
-function isSelf(req, res, next){
-  if(parseInt(req.params.userId) !== req.claim.id){
-    return next({ status: 401, message: 'Unauthorized' })
+function isSelf(req, res, next) {
+  if (parseInt(req.params.userId) !== req.claim.id) {
+    return next({ status: 401, message: "Unauthorized" });
   }
-  next()
+  next();
 }
-
 
 module.exports = {
   login,
   getAuthStatus,
   isAuthenticated,
-  isSelf
-}
+  isSelf,
+};
